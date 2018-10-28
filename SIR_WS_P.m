@@ -1,47 +1,47 @@
 %====================================================
-%Author: MarkoXu  04712641@qq.com
+%Author: MarkoXu  704712641@qq.com
 %Date: 2018-10-27
 %Desc: SIR model in ws model with different p
 %Reference: Collective dynamic of 'small-world' networks Fig. 3a
 %====================================================
 
-%% ÉèÖÃÖØÁ¬¸ÅÂÊp,²úÉúWSÍøÂç
+%% è®¾ç½®é‡è¿æ¦‚ç‡p,äº§ç”ŸWSç½‘ç»œ
 p = 10.^(-4);
 WS_network
 
-%% ¶à´Î¸ĞÈ¾¹ı³Ì£¬³öÏÖÒ»´Î°ëÊı¸ĞÈ¾¼´¿É
-count = 0; %ÊµÑéÖØ¸´´ÎÊı
-T = 1000; %ÉèÖÃ¼²²¡´«²¥µÄ×ÜÊ±¼ä²½Êı
-beta = 0.35; %¼²²¡µÄ¸ĞÈ¾ÂÊ£¬µ÷Õû¸ÃÖµÊ¹µÃÇ¡ºÃÄÜ¸ĞÈ¾³¬¹ı°ëÊıÈËÈº
-flag = 0; %³É¹¦¸ĞÈ¾°ëÊıÈËÈºµÄ±êÖ¾
+%% å¤šæ¬¡æ„ŸæŸ“è¿‡ç¨‹ï¼Œå‡ºç°ä¸€æ¬¡åŠæ•°æ„ŸæŸ“å³å¯
+count = 0; %å®éªŒé‡å¤æ¬¡æ•°
+T = 1000; %è®¾ç½®ç–¾ç—…ä¼ æ’­çš„æ€»æ—¶é—´æ­¥æ•°
+beta = 0.35; %ç–¾ç—…çš„æ„ŸæŸ“ç‡ï¼Œè°ƒæ•´è¯¥å€¼ä½¿å¾—æ°å¥½èƒ½æ„ŸæŸ“è¶…è¿‡åŠæ•°äººç¾¤
+flag = 0; %æˆåŠŸæ„ŸæŸ“åŠæ•°äººç¾¤çš„æ ‡å¿—
 while count < 1000
-    node_state = zeros(N, 1); %½Úµã×´Ì¬£¬0ÎªÒ×¸ĞÌ¬SÌ¬£¬1Îª¸ĞÈ¾Ì¬IÌ¬
-    %% ÖÖ×Ó½ÚµãµÄ¸ĞÈ¾¹ı³Ì=========================
-    seed_node = randi(N,1); %Ëæ»úÑ¡È¡Ò»¸ö½Úµã×÷Îª¸ĞÈ¾µÄÖÖ×Ó½Úµã
-    node_state(seed_node) = 1;  %Ëæ»úÑ¡Ò»¸ö½Úµã×÷Îª¸ĞÈ¾ÖÖ×Ó½Úµã
-    infected_total_num = 1; %³õÊ¼¸ĞÈ¾ÈËÊıÎª1£¬¼´ÖÖ×Ó½Úµã
+    node_state = zeros(N, 1); %èŠ‚ç‚¹çŠ¶æ€ï¼Œ0ä¸ºæ˜“æ„Ÿæ€Sæ€ï¼Œ1ä¸ºæ„ŸæŸ“æ€Iæ€
+    %% ç§å­èŠ‚ç‚¹çš„æ„ŸæŸ“è¿‡ç¨‹=========================
+    seed_node = randi(N,1); %éšæœºé€‰å–ä¸€ä¸ªèŠ‚ç‚¹ä½œä¸ºæ„ŸæŸ“çš„ç§å­èŠ‚ç‚¹
+    node_state(seed_node) = 1;  %éšæœºé€‰ä¸€ä¸ªèŠ‚ç‚¹ä½œä¸ºæ„ŸæŸ“ç§å­èŠ‚ç‚¹
+    infected_total_num = 1; %åˆå§‹æ„ŸæŸ“äººæ•°ä¸º1ï¼Œå³ç§å­èŠ‚ç‚¹
     t = 1;
-    neighbors = node_neighbors{seed_node}; %ÖÖ×Ó½ÚµãµÄÁÚ¾Ó
-    rand_num = rand(length(neighbors),1);%²úÉúËæ»úÊıÓë¸ĞÈ¾ÂÊ¸ĞÈ¾¸ÅÂÊ±È½Ï
-    %ÕæÕı´«²¥¼²²¡ĞèÒªÂú×ãÁ½¸öÌõ¼ş£º½Ó´¥µÄ½ÚµãÎªSÌ¬ÇÒÄÜ³É¹¦¸ĞÈ¾
+    neighbors = node_neighbors{seed_node}; %ç§å­èŠ‚ç‚¹çš„é‚»å±…
+    rand_num = rand(length(neighbors),1);%äº§ç”Ÿéšæœºæ•°ä¸æ„ŸæŸ“ç‡æ„ŸæŸ“æ¦‚ç‡æ¯”è¾ƒ
+    %çœŸæ­£ä¼ æ’­ç–¾ç—…éœ€è¦æ»¡è¶³ä¸¤ä¸ªæ¡ä»¶ï¼šæ¥è§¦çš„èŠ‚ç‚¹ä¸ºSæ€ä¸”èƒ½æˆåŠŸæ„ŸæŸ“
     node_infected = neighbors((rand_num<beta)&(~node_state(neighbors))); 
     infected_total_num = infected_total_num + length(node_infected);
-    node_state(node_infected) = 1; %¸ĞÈ¾½Úµã×´Ì¬ÖÃÎª1
-    %% ºóĞø½ÚµãµÄ¸ĞÈ¾¹ı³Ì=========================
+    node_state(node_infected) = 1; %æ„ŸæŸ“èŠ‚ç‚¹çŠ¶æ€ç½®ä¸º1
+    %% åç»­èŠ‚ç‚¹çš„æ„ŸæŸ“è¿‡ç¨‹=========================
     while t <= 1000
         t = t + 1;
-        node_infected_temp = []; %¼ÇÂ¼ĞÂ¸ĞÈ¾µÄÁÚ¾Ó½Úµã£¬¿ÉÄÜ´æÔÚÖØ¸´£¬ºóÃæÈ¥ÖØ
+        node_infected_temp = []; %è®°å½•æ–°æ„ŸæŸ“çš„é‚»å±…èŠ‚ç‚¹ï¼Œå¯èƒ½å­˜åœ¨é‡å¤ï¼Œåé¢å»é‡
         for j = 1 : length(node_infected)
             neighbors = node_neighbors{node_infected(j)};
             rand_num = rand(length(neighbors),1);
             node_infected_temp = [node_infected_temp; neighbors((rand_num<beta)&(~node_state(neighbors)))];
         end
-        node_infected = unique(node_infected_temp, 'stable'); %È¥³ıÖØ¸´µÄ¸ĞÈ¾ÁÚ¾Ó
+        node_infected = unique(node_infected_temp, 'stable'); %å»é™¤é‡å¤çš„æ„ŸæŸ“é‚»å±…
         infected_total_num = infected_total_num + length(node_infected);
         node_state(node_infected) = 1;
     end
     count = count + 1;
-    %¸ĞÈ¾³¬¹ı°ëÊıÔò´«²¥Í£Ö¹
+    %æ„ŸæŸ“è¶…è¿‡åŠæ•°åˆ™ä¼ æ’­åœæ­¢
     if infected_total_num/N >= 0.5
         flag = 1;
         break;
@@ -49,21 +49,21 @@ while count < 1000
 end
 
 if flag == 1
-     fprintf('¸ÃpºÍbeta×éºÏ¿ÉÒÔ³É¹¦¸ĞÈ¾°ëÊı£¬¿É³¢ÊÔÊÊµ±µ÷µÍ¼²²¡µÄ¸ĞÈ¾ÂÊbeta\n');
+     fprintf('è¯¥på’Œbetaç»„åˆå¯ä»¥æˆåŠŸæ„ŸæŸ“åŠæ•°ï¼Œå¯å°è¯•é€‚å½“è°ƒä½ç–¾ç—…çš„æ„ŸæŸ“ç‡beta\n');
 else
-    fprintf('¸ÃpºÍbeta×éºÏ²»ÄÜ³É¹¦¸ĞÈ¾°ëÊı£¬¿É³¢ÊÔÊÊµ±µ÷¸ß¼²²¡µÄ¸ĞÈ¾ÂÊbeta\n');
+    fprintf('è¯¥på’Œbetaç»„åˆä¸èƒ½æˆåŠŸæ„ŸæŸ“åŠæ•°ï¼Œå¯å°è¯•é€‚å½“è°ƒé«˜ç–¾ç—…çš„æ„ŸæŸ“ç‡beta\n');
 end
 
-%% ¼ÇÂ¼¶à´ÎÊµÑé½á¹û£¬»æÖÆÇúÏß
+%% è®°å½•å¤šæ¬¡å®éªŒç»“æœï¼Œç»˜åˆ¶æ›²çº¿
 %{
-%ÖØÁ¬¸ÅÂÊµÄÈ¡Öµ·¶Î§0.0001~1
-p_link = logspace(-4, 0, 9); %ÖØÁ¬¸ÅÂÊµÄÈ¡Öµ·¶Î§0.0001~1£¬¶ÔÊı¼ä¸ô
-%Òª´ïµ½°ë¸ĞÈ¾Ìõ¼ş×îĞ¡µÄbetaÖµ
+%é‡è¿æ¦‚ç‡çš„å–å€¼èŒƒå›´0.0001~1
+p_link = logspace(-4, 0, 9); %é‡è¿æ¦‚ç‡çš„å–å€¼èŒƒå›´0.0001~1ï¼Œå¯¹æ•°é—´éš”
+%è¦è¾¾åˆ°åŠæ„ŸæŸ“æ¡ä»¶æœ€å°çš„betaå€¼
 r_half = [0.34,0.33,0.28,0.25,0.21,0.18,0.16,0.137,0.135]; 
-%»æÖÆÇúÏß
+%ç»˜åˆ¶æ›²çº¿
 plot(p_link, r_half, '.', 'markersize', 20);
 xlabel('p');ylabel('r_{half}');
-title('r_{half}ÓëpµÄ¹ØÏµÍ¼');
+title('r_{half}ä¸pçš„å…³ç³»å›¾');
 set(gca,'xscale','log')
 %}
 
